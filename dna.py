@@ -2,16 +2,18 @@ from pygame import Vector2 as v2
 import random
 from globals import *
 
+speed = 360
 
 def ra():
-    return v2(
-        random.randint(-100, 100) * propulsion, random.randint(-100, 100) * propulsion
-    )
+    vec = v2(random.randint(-speed, speed), random.randint(-speed,speed))
+    if (x := vec.magnitude()) > max_force:
+        return vec * (max_force / x)
+    return vec
 
 
 class DNA:
     def __init__(self) -> None:
-        self.genes = []
+        self.genes: list[v2] = []
         for _ in range(frames):
             self.genes.append(ra())
 

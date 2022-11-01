@@ -1,7 +1,5 @@
 import pygame
-from dna import DNA
 from population import Population
-from rocket import Rocket
 from globals import *
 
 
@@ -11,7 +9,7 @@ def main():
     clock = pygame.time.Clock()
     running = True
     while running:
-        clock.tick(60)
+        clock.tick(120)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
@@ -25,11 +23,13 @@ def main():
 
         screen.fill((0, 0, 0))
 
+        pygame.draw.circle(screen, (0, 255, 0), targetpos, targetrad)
+
         population.update(current_frame)
-        current_frame += 1
-        current_frame %= frames
 
         pygame.display.flip()
+        current_frame += 1
+        current_frame %= frames
     pygame.quit()
 
 
