@@ -2,10 +2,11 @@ import pygame
 import math
 
 screen = pygame.display.set_mode((1000, 1000))
+pygame.display.set_caption("Smart Rockets")
 height = screen.get_height()
 width = screen.get_width()
 center = pygame.Vector2(width / 2, height / 2)
-frames = 200
+frames = 1200
 max_rockets = 25
 max_force = 0.01
 

@@ -2,10 +2,9 @@ from pygame import Vector2 as v2
 import random
 from globals import *
 
-speed = 360
 
 def ra():
-    vec = v2(random.randint(-speed, speed), random.randint(-speed,speed))
+    vec = v2(random.randint(-360, 360), random.randint(-360, 360))
     if (x := vec.magnitude()) > max_force:
         return vec * (max_force / x)
     return vec
@@ -18,6 +17,10 @@ class DNA:
             self.genes.append(ra())
 
     def mutate(self):
-        for g in self.genes:
+        new_genes = []
+        for i in range(frames):
             if random.random() == 0.01:
-                g = self.ra()
+                new_genes.append(ra())
+            else:
+                new_genes.append(self.genes[i])
+        self.genes = new_genes

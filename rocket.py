@@ -9,13 +9,19 @@ class Rocket:
     def __init__(self, dna: DNA = None) -> None:
         self.flying = True
         self.hit_target = False
+
         self.pos = v2(center.x, height - 100)
         self.vel = v2(0, 0)
         self.acc = v2(0, 0)
+
         if not dna:
             self.dna = DNA()
         else:
             self.dna = dna
+
+        self.score = 0
+        self.hit_at = frames
+
         self.image = pygame.Surface((100, 100), pygame.SRCALPHA)
         self.image.fill((pygame.Color(0, 0, 0, 0)))
         self.irect = pygame.Rect(0, 0, 50, 10)
@@ -25,7 +31,7 @@ class Rocket:
 
     def update(self, frame: int):
         if self.flying and not self.hit_target:
-            self.collision()
+            self.collision(frame)
             self.acc = self.dna.genes[frame]
             self.accelerate()
         self.draw()
@@ -42,17 +48,29 @@ class Rocket:
         screen.blit(image, self.rect)
 
     def stop(self):
+        self.eval()
+        print(self.score)
         self.flying = False
         self.image.set_alpha(100)
 
-    def collision(self):
-        if dist(self.pos, targetpos) <= targetrad:
+    def collision(self, frame: int):
+        self.target_distance = dist(self.pos, targetpos)
+        if self.target_distance <= targetrad:
             self.hit_target = True
-            self.stop()
+            self.hit_at = frame
         if (
             self.pos.y <= 0
             or self.pos.y >= height
             or self.pos.x <= 0
             or self.pos.x >= width
-        ):
+        ) or self.hit_target:
             self.stop()
+
+    def eval(self):
+        self.score = 1 / self.target_distance
+        if not self.flying:
+            if self.hit_target:
+                self.score *= 10
+            else:
+                self.score /= 10
+        # self.score += 1 / self.hit_at
