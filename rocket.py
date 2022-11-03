@@ -48,8 +48,6 @@ class Rocket:
         screen.blit(image, self.rect)
 
     def stop(self):
-        self.eval()
-        print(self.score)
         self.flying = False
         self.image.set_alpha(100)
 
@@ -73,4 +71,4 @@ class Rocket:
                 self.score *= 10
             else:
                 self.score /= 10
-        # self.score += 1 / self.hit_at
+        self.score += 1 / self.hit_at

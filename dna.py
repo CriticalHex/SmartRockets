@@ -19,7 +19,7 @@ class DNA:
     def mutate(self):
         new_genes = []
         for i in range(frames):
-            if random.random() == 0.01:
+            if random.random() == 0.1:
                 new_genes.append(ra())
             else:
                 new_genes.append(self.genes[i])
