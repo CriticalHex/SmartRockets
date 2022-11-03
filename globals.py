@@ -14,6 +14,11 @@ targetpos = pygame.Vector2(center.x, 100)
 targetrad = 40
 
 
+def move_target(pos: pygame.Vector2):
+    global targetpos
+    targetpos = pos
+
+
 def heading(v: pygame.Vector2):
     if v.x > 0:
         if v.y > 0:
