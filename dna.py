@@ -4,7 +4,7 @@ import globals as g
 
 
 def ra():
-    vec = v2(random.randint(-360, 360), random.randint(-360, 360))
+    vec = v2(random.randint(-1, 1), random.randint(-1, 1))
     if (x := vec.magnitude()) > g.max_force:
         return vec * (g.max_force / x)
     return vec
@@ -16,9 +16,11 @@ class DNA:
         for _ in range(g.frames):
             self.genes.append(ra())
 
-    def mutate(self, score: float):
-        chance = score # ((1 / score) / 5) / 100
-        print(score, chance)
+    def mutate(self, hit: bool):
+        if hit:
+            chance = 0.001
+        else:
+            chance = 0.1
         new_genes = []
         for i in range(g.frames):
             if random.random() <= chance:

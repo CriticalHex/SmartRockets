@@ -10,6 +10,7 @@ def main():
     clock = pygame.time.Clock()
     running = True
     while running:
+        # clock.tick(60)
         for event in pygame.event.get():
             if event.type == pygame.MOUSEMOTION:
                 mouse = pygame.Vector2(*pygame.mouse.get_pos())
@@ -24,16 +25,15 @@ def main():
                 population = Population()
             if keys[pygame.K_SPACE]:
                 pass
-            
-            
+
         population.update(current_frame)
-        if current_frame % 100 == 0:
-            g.screen.fill((0, 0, 0))
-            pygame.draw.circle(g.screen, (0, 255, 0), g.targetpos, g.targetrad)
-            population.draw()
-            pygame.display.flip()
-            
-        
+        g.screen.fill((0, 0, 0))
+        pygame.draw.circle(g.screen, (0, 255, 0), g.targetpos, g.targetrad)
+        pygame.draw.rect(g.screen, (255, 0, 0), g.obstacle1)
+        pygame.draw.rect(g.screen, (255, 0, 0), g.obstacle2)
+        population.draw()
+        pygame.display.flip()
+
         current_frame += 1
         current_frame %= g.frames
     pygame.quit()

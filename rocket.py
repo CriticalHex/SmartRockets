@@ -3,6 +3,7 @@ import pygame
 from pygame import Vector2 as v2
 import globals as g
 from dna import DNA
+from numpy import interp
 
 
 class Rocket:
@@ -13,6 +14,9 @@ class Rocket:
         self.pos = v2(g.center.x, g.height - 100)
         self.vel = v2(0, 0)
         self.acc = v2(0, 0)
+
+        self.initial_dist = dist(self.pos, g.targetpos)
+        print(self.initial_dist)
 
         if not dna:
             self.dna = DNA()
@@ -32,14 +36,15 @@ class Rocket:
     def update(self, frame: int):
         if self.flying and not self.hit_target:
             self.collision(frame)
-            self.acc = self.dna.genes[frame]
+            self.acc += self.dna.genes[frame]
             self.accelerate()
 
     def accelerate(self):
         self.vel += self.acc
-        if self.vel.magnitude() > 0:
-            self.vel = self.vel.normalize()
         self.pos += self.vel
+        # if (x := self.vel.magnitude()) > 6:
+        #     self.vel *= 6 / x
+        # self.acc *= 0
         self.rect.center = self.pos
 
     def draw(self):
@@ -58,17 +63,22 @@ class Rocket:
             self.hit_target = True
             self.hit_at = frame
         if (
-            self.pos.y <= 0
-            or self.pos.y >= g.height
-            or self.pos.x <= 0
-            or self.pos.x >= g.width
-        ) or self.hit_target:
+            (
+                self.pos.y <= 0
+                or self.pos.y >= g.height
+                or self.pos.x <= 0
+                or self.pos.x >= g.width
+            )
+            or (self.rect.colliderect(g.obstacle1))
+            or (self.rect.colliderect(g.obstacle2))
+            or self.hit_target
+        ):
             self.stop()
 
     def eval(self):
-        self.score   = g.frames / self.target_distance
-        # if self.hit_target:
-        #     pre_normal -= 100
-        # else:
-        #     pre_normal += 200
-        print(self.score)
+        self.score = self.initial_dist / self.target_distance
+        # self.score *= g.frames / self.hit_at
+        if self.hit_target:
+            self.score *= 20
+        else:
+            self.score /= 2

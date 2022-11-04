@@ -6,17 +6,15 @@ pygame.display.set_caption("Smart Rockets")
 height = screen.get_height()
 width = screen.get_width()
 center = pygame.Vector2(width / 2, height / 2)
-frames = 1200
+frames = 200
 max_rockets = 25
-max_force = 0.01
+max_force = 0.04
 
 targetpos = pygame.Vector2(center.x, 100)
 targetrad = 40
 
-
-def move_target(pos: pygame.Vector2):
-    global targetpos
-    targetpos = pos
+obstacle1 = pygame.Rect(50, 300, 500, 20)
+obstacle2 = pygame.Rect(450, 700, 500, 20)
 
 
 def heading(v: pygame.Vector2):

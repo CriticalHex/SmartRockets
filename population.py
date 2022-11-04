@@ -14,7 +14,7 @@ class Population:
     def reproduce(self):
         self.normalize_scores()
         for r in self.rockets:
-            r.dna.mutate(r.score)
+            r.dna.mutate(r.hit_target)
             select = 0
             selector = random.random()
             while selector > 0:
@@ -42,7 +42,7 @@ class Population:
             self.reproduce()
         for r in self.rockets:
             r.update(frame)
-            
+
     def draw(self):
         for r in self.rockets:
             r.draw()
@@ -53,4 +53,4 @@ class Population:
             total += r.score
         for r in self.rockets:
             r.score /= total
-            #print(r.score)
+            # print(r.score)
