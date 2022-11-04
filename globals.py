@@ -1,14 +1,18 @@
 import pygame
 import math
 
+pygame.init()
+
 screen = pygame.display.set_mode((1000, 1000))
 pygame.display.set_caption("Smart Rockets")
 height = screen.get_height()
 width = screen.get_width()
 center = pygame.Vector2(width / 2, height / 2)
-frames = 200
-max_rockets = 25
+frames = 400
+max_rockets = 250
 max_force = 0.04
+
+font = pygame.font.SysFont(None, 48)
 
 targetpos = pygame.Vector2(center.x, 100)
 targetrad = 40

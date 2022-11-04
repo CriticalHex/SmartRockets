@@ -8,6 +8,7 @@ def main():
     current_frame = 0
     population = Population()
     clock = pygame.time.Clock()
+    speed = 100
     running = True
     while running:
         # clock.tick(60)
@@ -25,14 +26,20 @@ def main():
                 population = Population()
             if keys[pygame.K_SPACE]:
                 pass
+            if keys[pygame.K_UP]:
+                speed = 100
+            if keys[pygame.K_DOWN]:
+                speed = 1
 
         population.update(current_frame)
-        g.screen.fill((0, 0, 0))
-        pygame.draw.circle(g.screen, (0, 255, 0), g.targetpos, g.targetrad)
-        pygame.draw.rect(g.screen, (255, 0, 0), g.obstacle1)
-        pygame.draw.rect(g.screen, (255, 0, 0), g.obstacle2)
-        population.draw()
-        pygame.display.flip()
+        
+        if current_frame % speed == 0:
+            g.screen.fill((0, 0, 0))
+            pygame.draw.circle(g.screen, (0, 255, 0), g.targetpos, g.targetrad)
+            pygame.draw.rect(g.screen, (255, 0, 0), g.obstacle1)
+            pygame.draw.rect(g.screen, (255, 0, 0), g.obstacle2)
+            population.draw()
+            pygame.display.flip()
 
         current_frame += 1
         current_frame %= g.frames

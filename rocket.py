@@ -16,7 +16,7 @@ class Rocket:
         self.acc = v2(0, 0)
 
         self.initial_dist = dist(self.pos, g.targetpos)
-        print(self.initial_dist)
+        # print(self.initial_dist)
 
         if not dna:
             self.dna = DNA()
@@ -81,4 +81,5 @@ class Rocket:
         if self.hit_target:
             self.score *= 20
         else:
+            pass
             self.score /= 2

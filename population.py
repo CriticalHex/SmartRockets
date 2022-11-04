@@ -1,4 +1,4 @@
-from globals import *
+import globals as g
 from rocket import Rocket
 import random
 from dna import DNA
@@ -6,9 +6,11 @@ from dna import DNA
 
 class Population:
     def __init__(self) -> None:
+        self.generations = 0
+        self.font = g.font.render(f"Generations: {self.generations}", True, (0,0,255))
         self.rockets: list[Rocket] = []
         self.repro_pool: list[Rocket] = []
-        for _ in range(max_rockets):
+        for _ in range(g.max_rockets):
             self.rockets.append(Rocket())
 
     def reproduce(self):
@@ -24,19 +26,21 @@ class Population:
             self.repro_pool.append(self.rockets[select])
         new_rockets = []
         for r in self.repro_pool:
-            mid = random.randrange(0, frames)
-            p1 = self.repro_pool[random.randrange(0, max_rockets)]
-            p2 = self.repro_pool[random.randrange(0, max_rockets)]
+            mid = random.randrange(0, g.frames)
+            p1 = self.repro_pool[random.randrange(0, g.max_rockets)]
+            p2 = self.repro_pool[random.randrange(0, g.max_rockets)]
             new_dna = DNA()
             new_dna.genes.clear()
             new_dna.genes.extend(p1.dna.genes[0:mid])
-            new_dna.genes.extend(p2.dna.genes[mid:frames])
+            new_dna.genes.extend(p2.dna.genes[mid:g.frames])
             new_rockets.append(Rocket(new_dna))
         self.repro_pool.clear()
         self.rockets = new_rockets
 
     def update(self, frame: int):
-        if frame == frames - 1:
+        if frame == g.frames - 1:
+            self.generations += 1
+            self.font = g.font.render(f"Generations: {self.generations}", True, (0,0,255))
             for r in self.rockets:
                 r.eval()
             self.reproduce()
@@ -44,6 +48,7 @@ class Population:
             r.update(frame)
 
     def draw(self):
+        g.screen.blit(self.font, (0,0))
         for r in self.rockets:
             r.draw()
 
