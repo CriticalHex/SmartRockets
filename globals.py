@@ -8,7 +8,7 @@ pygame.display.set_caption("Smart Rockets")
 height = screen.get_height()
 width = screen.get_width()
 center = pygame.Vector2(width / 2, height / 2)
-frames = 400
+frames = 200
 max_rockets = 250
 max_force = 0.04
 

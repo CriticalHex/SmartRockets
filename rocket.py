@@ -3,7 +3,6 @@ import pygame
 from pygame import Vector2 as v2
 import globals as g
 from dna import DNA
-from numpy import interp
 
 
 class Rocket:
